@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h3>ADD Book</h3>
+        <div>书名: <input type="text" placeholder="请输入书名:" v-model="newBook.name"></div>
+        <div>单价: <input type="text" placeholder="请输入单价:" v-model="newBook.price"></div>
+        <button @click="addNewBook">添加</button>
+        <table>
+            <tr>
+                <th>序号</th>
+                <th>商品名称</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>金额</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(book,index) in books" :key="book.id">
+                <td v-text="book.id"></td>
+                <td v-text="book.name"></td>
+                <td v-text="book.price + '/RMB'"></td>
+                <td>
+                    <button v-bind:disabled="book.num === 0" @click="book.num--">-</button>
+                    {{ book.num }}
+                    <button @click="book.num++">+</button>
+                </td>
+                <td>{{ book.num * book.price }}</td>
+                <td>
+                    <button @click="deleteItem(index)">删除</button>
+                </td>
+            </tr>
+        </table>
+        总价:{{ totlePrice() }}
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            newBook:{
+                name:'',
+                price:''
+            },
+            books: [
+                {
+                    id: 1,
+                    name: "JavaScript高级语言程序设计",
+                    price: 98,
+                    num: 0
+                },
+                {
+                    id: 2,
+                    name: "JavaScript设计模式",
+                    price: 88,
+                    num: 0
+                },
+                {
+                    id: 3,
+                    name: "CSS揭密",
+                    price: 102,
+                    num: 0
+                },
+                {
+                    id: 4,
+                    name: "vue从入门到实战",
+                    price: 69,
+                    num: 0
+                },
+            ]
+        },
+        computed: {
+        },
+        methods: {
+            deleteItem(index){
+                this.books.splice(index,1)
+            },
+            addNewBook(){
+                this.books.push({
+                    id:this.books[this.books.length-1].id +1,
+                    name:this.newBook.name,
+                    price:this.newBook.price,
+                    num:0
+                })
+            },
+            totlePrice() {
+                let price = 0;
+                for (let book of this.books) {
+                    price += book.price * book.num
+                }
+                return price
+            }
+        }
+    })
+</script>
+
+</html>
