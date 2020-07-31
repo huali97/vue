@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+</head>
+
+<body>
+    <div id="app">
+        <form action="" method="get">
+            用户名：<input type="text" v-model="user.name"><br>
+            密码:<input type="password" v-model="user.password"><br>
+            性别: <input type="radio" name="男" id="man" value="男" v-model="user.sex"> <label for="man">男</label> <input
+                type="radio" name="女" id="woman" value="女" v-model="user.sex"> <label for="woman">女</label><br>
+            电子邮箱: <input type="email" v-model="user.email"><br>
+            Q<input type="text" v-model="user.pwdQ"><br>
+            A<input type="text" v-model="user.pwdA"><br>
+            <input type="button" value="注册" @click="register"> <input type="button" value="重置" @click="reset">
+        </form>
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            user: {
+                name: '',
+                password: '',
+                sex: '',
+                email: '',
+                pwdQ: '',
+                pwdA: ''
+            },
+        },
+        methods: {
+            register() {
+                console.log(this.user)
+            }, 
+            reset() { 
+                for(i in this.user){
+                    this.user[i] = ''
+                }
+            }
+        }
+    })
+</script>
+
+</html>
