@@ -5,15 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>book list</title>
+    <style>
+        table {
+            text-align: center;
+            border-spacing: 0;
+        }
+
+        tr {
+            height: 50px;
+        }
+
+        th,
+        td {
+            width: 300px;
+        }
+        .even{
+            background-color: cadetblue;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        <h3>ADD Book</h3>
-        <div>书名: <input type="text" placeholder="请输入书名:" v-model="newBook.name"></div>
-        <div>单价: <input type="text" placeholder="请输入单价:" v-model="newBook.price"></div>
-        <button @click="addNewBook">添加</button>
+        <div class="add">
+            <h3>ADD Book</h3>
+            <div>书名: <input type="text" placeholder="请输入书名:" v-model="newBook.name"></div>
+            <div>单价: <input type="text" placeholder="请输入单价:" v-model="newBook.price"></div>
+            <button @click="addNewBook">添加</button>
+        </div>
         <table>
             <tr>
                 <th>序号</th>
@@ -23,7 +43,7 @@
                 <th>金额</th>
                 <th>操作</th>
             </tr>
-            <tr v-for="(book,index) in books" :key="book.id">
+            <tr v-for="(book,index) in books" :key="book.id" :class="{even:book.id%2===0}">
                 <td v-text="book.id"></td>
                 <td v-text="book.name"></td>
                 <td v-text="book.price + '/RMB'"></td>
@@ -38,7 +58,7 @@
                 </td>
             </tr>
         </table>
-        总价:{{ totlePrice() }}
+        <div style="float: right; margin:30px;"> 总价:{{ totlePrice() }} </div>
     </div>
 </body>
 <script src="./js/vue.js"></script>
@@ -46,9 +66,9 @@
     var vm = new Vue({
         el: "#app",
         data: {
-            newBook:{
-                name:'',
-                price:''
+            newBook: {
+                name: '',
+                price: ''
             },
             books: [
                 {
@@ -80,15 +100,15 @@
         computed: {
         },
         methods: {
-            deleteItem(index){
-                this.books.splice(index,1)
+            deleteItem(index) {
+                this.books.splice(index, 1)
             },
-            addNewBook(){
+            addNewBook() {
                 this.books.push({
-                    id:this.books[this.books.length-1].id +1,
-                    name:this.newBook.name,
-                    price:this.newBook.price,
-                    num:0
+                    id: this.books[this.books.length - 1].id + 1,
+                    name: this.newBook.name,
+                    price: this.newBook.price,
+                    num: 0
                 })
             },
             totlePrice() {
