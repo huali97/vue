@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>postList</title>
+</head>
+<body>
+<div id="app">
+    <post-list></post-list>
+</div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+
+    // 父组件
+    Vue.component('PostList', {
+        data() {
+            return {
+                posts: [
+                    {
+                        id: 1,
+                        title: "JavaScript高级语言程序设计多少钱?",
+                        author: "张三",
+                        data: new Date(),
+                        vote: 0
+                    },
+                    {
+                        id: 2,
+                        title: "Vue.js怎么样?",
+                        author: "李四",
+                        data: new Date(),
+                        vote: 0
+                    },
+                    {
+                        id: 3,
+                        title: "JavaScript高级语言程序设计多少钱?",
+                        author: "王五",
+                        data: new Date(),
+                        vote: 0
+                    }
+                ],
+                methods: {
+                    handleVote(id) {
+                        this.posts.map(item => {
+
+                        })
+                    }
+                },
+                template: `
+                    <div>
+                        <ul v-for="post in posts" :key="post.id">
+                            <PostItem :post="post"  @vote="handleVote(post.id)"></PostItem>
+                        </ul>
+                    </div>
+                `
+            }
+        }
+    })
+
+    // 子组件
+    Vue.component('PostItem', {
+        methods: {
+            handleVote() {
+                this.$emit('vote')
+            }
+        },
+        props: ['post'],
+        template: `
+            <li>
+                <p>
+                    <span>标题:{{ post.title }} | 发贴人:{{ post.author }} | 发帖时间:{{ post.data }}
+                        | 点赞数:{{ post.vote }}</span>
+                    <button @click="handleVote">赞</button>
+                </p>
+            </li>
+        `
+    })
+    const vm = new Vue({
+        el: "#app"
+    })
+
+</script>
+</html>

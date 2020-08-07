@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>父子组件传值</title>
+</head>
+
+<body>
+<div id="app">
+    <my-title post-title="vue"></my-title>
+    <post-item v-bind:book="bookList"></post-item>
+</div>
+</body>
+
+<script src="./js/vue.js"></script>
+<script>
+    // 使用prop向子组件传值(元素具有屬性,给组件设置prop接受属性)
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            bookList: {
+                name: 'JavaScript高级程序语言设计(第三版)',
+                author: 'C.Zakas',
+                price: 98,
+            }
+        },
+        components: {
+            'MyTitle': {
+                props: ['postTitle'],
+                template: '<h1>{{ postTitle }}</h1>'
+            },
+            'PostItem': {
+                props: ['book'],
+                template: '<div><h1>name:{{book.name}}</h1><h5>author:{{book.author}}</h5><h5>price:{{book.price}}</h5></div>'
+            }
+        }
+
+    })
+</script>
+
+</html>

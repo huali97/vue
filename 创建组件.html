@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建组件</title>
+</head>
+<body>
+
+<!--vue实例1-->
+<div id="app1">
+    <button-click></button-click>
+    <button-click-vm></button-click-vm>
+    <button-click2></button-click2>
+</div>
+
+<!--vue实例2-->
+<div id="app2">
+    <button-click></button-click>
+
+    <!--    vm1的组件在vm实例2中调用会报错-->
+    <!--    <button-click-vm></button-click-vm>-->
+
+    <!--    局部组件也可以使用extend构造组件-->
+    <button-click-vm2></button-click-vm2>
+</div>
+
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 创建全局组件
+    Vue.component('ButtonClick', {
+        data() {
+            return {
+                count: 0
+            }
+        },
+        template: '<div><h1>这是全局组件:</h1><button @click="count++">你点击了:{{count}}次</button></div>'
+    })
+    // 创建全局组件也可以使用extend()方法创建组件构造器
+    let MyComponent = Vue.extend({
+        data() {
+            return {
+                count: 0
+            }
+        },
+        template: '<div><h1>组件:</h1><button @click="count++">你点击了:{{count}}次</button></div>'
+    })
+    Vue.component('ButtonClick2',MyComponent)
+    // 全局组件可以在任意vue中使用
+    const vm1 = new Vue({
+        el: "#app1",
+        data() {
+            return {}
+        },
+        components: {
+            'ButtonClickVm': {
+                data() {
+                    return {
+                        count: 0
+                    }
+                },
+                template: '<div><h1>这是vm1的局部组件:</h1><button @click="count++">你点击了:{{count}}次</button></div>'
+            }
+        }
+    })
+    const vm2 = new Vue({
+        el: "#app2",
+        components: {
+            'ButtonClickVm2':MyComponent
+        }
+    })
+</script>
+</html>
