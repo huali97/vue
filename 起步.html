@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=s, initial-scale=1.0">
+    <title>vue-router</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>vue-router</h1>
+        <p>
+            <router-link to='/home'>home</router-link>
+            <router-link to='/about'>about</router-link>
+        </p>
+        <router-view></router-view>
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script src="./js/vue-router.js"></script>
+<script>
+    // 生成一个路由对象
+    const router = new VueRouter({
+        // 路由规则
+        routes: [
+            {
+                path: "/home",
+                component: {
+                    template:'<div>{{name}}</div>',
+                    data(){
+                        return {
+                            name:'home'
+                        }
+                    }
+                }//在路由中使用自定义组件
+            },
+            {
+                path: '/about',
+                component: {
+                    template:'<div>about</div>'
+                }
+            }
+        ]
+    })
+    const app = new Vue({
+        el:"#app",
+        router
+    })
+</script>
+
+</html>
