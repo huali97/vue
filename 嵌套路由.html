@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌套路由</title>
+</head>
+
+<body>
+<div id="app">
+    <router-view></router-view>
+</div>
+</body>
+<script src="./js/vue.js"></script>
+<script src="./js/vue-router.js"></script>
+<script>
+    const User = {
+       template:`
+        <div class="user">
+            <h2>User{{ $route.params.id }}</h2>
+            <router-view></router-view>
+        </div>
+       `
+    }
+   const UserProfile = {
+        template: `<div><h1>UserProfile</h1></div>`
+   }
+   const UserPosts = {
+        template:`<div><h1>UserPosts</h1></div>`
+   }
+   const router = new VueRouter({
+        routes: [
+            {
+                path: '/user/:id',
+                component: User,
+                // children 配置嵌套路由
+                children:[
+                    {
+                        path: 'profile',
+                        component: UserProfile
+                    },
+                    {
+                        path: 'posts',
+                        component: UserPosts
+                    }
+                ]
+            }
+        ]
+    })
+    const vm = new Vue({
+        router
+    }).$mount('#app')
+</script>
+
+</html>

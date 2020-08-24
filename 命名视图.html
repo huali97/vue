@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>命名视图</title>
+</head>
+<body>
+<div id="app">
+    <!--    使用多个route-view命名-->
+    <router-view class="view one"></router-view>
+    <router-view class="view two" name="a"></router-view>
+    <router-view class="view three" name="b"></router-view>
+</div>
+</body>
+<script src="./js/vue.js"></script>
+<script src="./js/vue-router.js"></script>
+<script>
+    const Foo = {
+        template:'<div>Foo</div>'
+    }
+    const Bar = {
+        template:'<div>Bar</div>'
+    }
+    const Baz = {
+        template:'<div>Baz</div>'
+    }
+    const router = new VueRouter({
+        routes: [
+            {
+                path: '/',
+                components: {
+                    default: Foo,
+                    a: Bar,
+                    b:Baz
+                }
+            }
+        ]
+    })
+    const vm = new Vue({
+        router
+    }).$mount('#app')
+</script>
+</html>
